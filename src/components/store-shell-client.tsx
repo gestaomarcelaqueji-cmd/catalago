@@ -1,0 +1,7 @@
+'use client';
+import {useState} from 'react';import Link from 'next/link';
+import type {Category} from '@/lib/models';import {Menu,Search,ShoppingBag} from './icons';import {useCart} from './cart-context';
+export function HeaderNav({categories,name,logo}:{categories:Category[];name:string;logo:string}){
+ const[open,setOpen]=useState(false),[search,setSearch]=useState(false);const {count}=useCart();
+ return <><div className="header-left"><button className="icon-btn mobile-only" onClick={()=>setOpen(!open)} aria-label="Abrir menu"><Menu size={23}/></button><nav className={'header-links '+(open?'is-open':'')}><Link onClick={()=>setOpen(false)} href="/catalogo">NOVIDADES</Link>{categories.filter(x=>!x.parent_id).slice(0,5).map(x=><Link onClick={()=>setOpen(false)} href={'/categoria/'+x.slug} key={x.id}>{x.name.toUpperCase()}</Link>)}</nav></div><Link className="brand" href="/" aria-label="Página inicial">{logo?<img src={logo} alt={name} />:name.toUpperCase()}</Link><div className="header-actions"><button className="icon-btn" onClick={()=>setSearch(!search)} aria-label="Buscar"><Search size={21}/></button><Link href="/carrinho" className="icon-btn bag" aria-label="Carrinho"><ShoppingBag size={21}/>{count>0&&<span className="bag-count">{count}</span>}</Link></div>{search&&<form action="/busca" className="search-popover"><input autoFocus name="q" placeholder="O que você está procurando?"/><button type="submit">Buscar</button></form>}</>;
+}
