@@ -19,8 +19,8 @@ Não haverá **pagamentos**, **frete automático**, **contas de clientes**, **em
 ### 1. Ambiente
 
 - Node.js 22.16+ e npm.
-- Abra esta pasta num repositório GitHub **novo e privado**. Não coloque em `nobron` ou `nobroneventos`.
-- Execute `npm install` para baixar dependências e gerar o `package-lock.json` (a instalação não foi executada no ambiente de geração porque o registro npm estava indisponível).
+- **Repositório já existente:** https://github.com/gestaomarcelaqueji-cmd/catalago (branch `main`). Não crie outro repositório nem utilize `nobron` ou `nobroneventos`.
+- Execute `npm install` para baixar dependências. O GitHub Actions verifica automaticamente TypeScript e compilação Next.js a cada alteração.
 - Copie `.env.example` para `.env.local` e preencha as variáveis.
 - Execute `npm run dev` e abra http://localhost:3000.
 
@@ -62,16 +62,16 @@ O endpoint valida novamente SKU/variação, status, preço e estoque no banco, c
 
 ### 5. Publicar na Vercel
 
-1. Crie repositório GitHub **privado** `loja-independente` (o conector GitHub acessível não oferece criar repositórios novos).
-2. Envie os arquivos do projeto, excluindo `.env.local`, `node_modules`, `.next` e ZIPs antigos. `gitignore` já está preparado.
+1. **Não crie outro repositório:** o código está em `gestaomarcelaqueji-cmd/catalago`. Se quiser que o código não seja público, altere a visibilidade para privado nas configurações do GitHub.
+2. O código já foi enviado e passou na verificação automatizada de tipos e build. Não envie `.env.local`, segredos, `node_modules` nem `.next`.
 3. Em **Vercel > Add New > Project**, importe o repositório e selecione o projeto Next.js.
 4. Configure `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY` e `QUOTE_HASH_SALT` nos ambientes Preview e Production.
 5. Publique **somente depois** de executar build, revisar a URL e validar um ciclo completo.
 6. Ajuste URL do site em **Supabase > Authentication > URL Configuration** caso use redirecionamentos por e-mail.
 
-### O que ainda precisa ser testado no ambiente com dependências
+### Validação antes de liberar a loja ao público
 
-A validação de sintaxe TypeScript/TSX passou, e o SQL foi aplicado/consultado no Supabase; porém não foi possível realizar `npm install`, `next build`, testes no navegador ou deploy Vercel a partir deste ambiente. Não tratar o sistema como homologado ou pronto para produção até executar esses testes.
+O GitHub Actions instalou as dependências e concluiu `npm run typecheck` e `npm run build` com sucesso. O SQL também foi aplicado e consultado no Supabase. Ainda faltam a configuração de ambiente na Vercel, o primeiro administrador e testes de navegação/funcionamento com produtos reais. Não trate o sistema como homologado até concluir essas etapas.
 
 Checklist: login de funcionário autorizado, restrição de não-admin, produto rascunho/publicado, foto e variante, categorias, busca/filtro mobile, carrinho, solicitação WhatsApp, confirmação e baixa de estoque, estorno no cancelamento, gestão de seções e atualização dos dados na loja, respostas de erro do servidor e tela 404.
 
