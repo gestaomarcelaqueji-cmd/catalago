@@ -1,4 +1,4 @@
-import{getServerClient}from'@/lib/supabase';import{AdminShell}from'@/components/admin-shell';
+import{getServerClient}from'@/lib/supabase-server';import{AdminShell}from'@/components/admin-shell';
 export const dynamic='force-dynamic';
 export default async function AdminLayout({children}:{children:React.ReactNode}){
  const db=await getServerClient();const{data:{user}}=await db.auth.getUser();
