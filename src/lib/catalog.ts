@@ -1,4 +1,4 @@
-import { getServerClient } from './supabase';
+import { getServerClient } from './supabase-server';
 import type {Category,HomeSection,Product,StoreSettings} from './models';
 export async function storeData(){
  const db=await getServerClient();
